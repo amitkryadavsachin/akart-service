@@ -11,7 +11,7 @@ This project is an e-commerce API system with three microservices: **User Servic
     - [Product Service](#product-service)
 - [Technologies Used](#technologies-used)
 - [Pre-requisites](#pre-requisites)
-- [Docker Image Creatio](#Docker-Image-Creation)
+- [Docker Image Creation](#Docker-Image-Creation)
 - [Endpoints](#endpoints)
 
 ## Architecture Overview
