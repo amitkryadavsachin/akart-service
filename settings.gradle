@@ -1,0 +1,2 @@
+rootProject.name = 'akart-service'
+include('user', 'order', 'product')

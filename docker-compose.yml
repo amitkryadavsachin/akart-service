@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # UserService
+  user-service:
+    image: akart/user-service
+    build:
+      context: ./user
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:userdb
+
+  # OrderService
+  order-service:
+    image: akart/order-service
+    build:
+      context: ./order
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysqldb:3306/orderdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - mysqldb
+
+  # MySQL database for OrderService
+  mysqldb:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: orderdb
+    ports:
+      - "3306:3306"
+
+  # ProductService
+  product-service:
+    image: akart/product-service
+    build:
+      context: ./product
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/productdb
+    depends_on:
+      - mongodb
+
+  # MongoDB database for ProductService
+  mongodb:
+    image: mongo:5
+    ports:
+      - "27017:27017"
