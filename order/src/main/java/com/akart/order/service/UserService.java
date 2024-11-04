@@ -17,7 +17,7 @@ public class UserService {
     @Autowired
     private HelperRestTemplate helperRestTemplate;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper =new ObjectMapper();
 
     public UserDto geUserById(Long id) {
         try {

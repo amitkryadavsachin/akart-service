@@ -21,7 +21,7 @@ public class OrderService {
     @Autowired
     private HelperRestTemplate helperRestTemplate;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper =new ObjectMapper();
 
     private void validateOrderDto(OrderDto orderDto){
         log.info("Validating Order");

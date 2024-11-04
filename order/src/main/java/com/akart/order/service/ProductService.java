@@ -15,7 +15,7 @@ public class ProductService {
     @Autowired
     private HelperRestTemplate helperRestTemplate;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper =new ObjectMapper();
 
 
     public ProductDto geProductById(String id) {
