@@ -116,10 +116,78 @@ All services communicate via REST APIs, where:
 
 After following these steps, all services should be running in Docker containers and accessible via their respective ports.
 
+### Setup Instructions
 
 ### 1. Clone the Repository
 
 ```bash
 https://github.com/amitkryadavsachin/akart-service.git
+
+User Service: No additional setup is needed, as it uses an in-memory H2 database.
+Order Service: Set up a MySQL or PostgreSQL database. Update the application.properties or application.yml file in the Order Service with your database credentials.
+Product Service: Set up a MongoDB instance and update the application.properties or application.yml file in the Product Service with your MongoDB URI.
+Configure Ports
+
+Ensure each service runs on a unique port. Ports can be configured in each service’s application.properties.
+Build the Project
+
+bash
+Copy code
+./gradlew build
+Running the Services
+To run each service, open separate terminal windows, navigate to each service directory, and use the following command:
+
+bash
+Copy code
+# For User Service
+./gradlew :user:bootRun
+
+# For Order Service
+./gradlew :order:bootRun
+
+# For Product Service
+./gradlew :product:bootRun
+Each service will be accessible on the following default ports unless specified otherwise:
+
+User Service: http://localhost:8081
+Order Service: http://localhost:8082
+Product Service: http://localhost:8083
+Testing the Services
+Postman or cURL can be used to interact with the endpoints.
+Verify the services can communicate by testing a workflow (e.g., placing an order via the Order Service and checking that it verifies user details through the User Service).
+Test each endpoint to ensure all CRUD operations work as expected.
+
+I have added dependency springdoc-openapi for api documentation so
+Endpoints you can view through baseUrl+swagger-ui/index.html
+
+Docker Image Creation
+To containerize each service, follow these steps:
+
+Install Docker: Ensure Docker is installed and running.
+
+Build Docker Images
+
+Navigate to each service directory and run:
+bash
+Copy code
+docker build -t user:1.0.0 -f Dockerfile .
+docker build -t order:1.0.0 -f Dockerfile .
+docker build -t product:1.0.0 -f Dockerfile .
+Run Docker Containers
+
+Start each service by running:
+bash
+Copy code
+docker run -p 8081:8081 -d user:1.0.0
+docker run -p 8082:8082 -d order:1.0.0
+docker run -p 8083:8083 -d product:1.0.0
+Push Docker Images (Optional)
+
+If deploying to a cloud environment, push the images to a container registry like Docker Hub or AWS ECR:
+bash
+Copy code
+docker tag user-service:1.0.0 your-repo/user-service:1.0.0
+docker push your-repo/user-service:1.0.0
+Repeat for other services.
 
 use branch: master
